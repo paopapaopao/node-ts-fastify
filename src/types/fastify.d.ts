@@ -1,12 +1,13 @@
 import 'fastify';
 
-import type createDb from '../db';
+import create from '../db';
 
 declare module 'fastify' {
   interface FastifyInstance {
     config: {
       DATABASE_URL: string;
+      PORT: number;
     };
-    db: ReturnType<typeof createDb>;
+    db: ReturnType<typeof create>;
   }
 }
