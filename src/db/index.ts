@@ -7,7 +7,8 @@ type Return = PostgresJsDatabase<Record<string, never>> & {
 
 export default function create(url: string): Return {
   const client = postgres(url);
-  const db = drizzle({ client });
+  const config = { client };
+  const db = drizzle(config);
 
   return db;
 }
