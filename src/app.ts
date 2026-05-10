@@ -1,9 +1,17 @@
 import Fastify, { FastifyReply } from 'fastify';
 
-const app = Fastify({ logger: true });
+import dbPlugin from './plugins/db';
+import envPlugin from './plugins/env';
 
-app.get('/', (_, reply: FastifyReply): void => {
-  reply.send('node-ts-fastify');
-});
+export default async function buildApp() {
+  const app = Fastify({ logger: true });
 
-export default app;
+  await app.register(envPlugin);
+  await app.register(dbPlugin);
+
+  app.get('/', (_, reply: FastifyReply): void => {
+    reply.send('node-ts-fastify');
+  });
+
+  return app;
+}
