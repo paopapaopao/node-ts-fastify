@@ -4,7 +4,10 @@
   "scripts": {
     "start": "tsx src/server.ts",
     "start:dev": "tsx watch src/server.ts",
-    "start:prod": "tsx src/server.ts"
+    "start:prod": "tsx src/server.ts",
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate",
+    "studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@fastify/env": "^6.0.0",
