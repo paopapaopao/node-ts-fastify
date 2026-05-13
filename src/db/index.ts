@@ -1,9 +1,7 @@
 import { type PostgresJsDatabase, drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
+import postgres, { type Sql } from 'postgres';
 
-type Return = PostgresJsDatabase<Record<string, never>> & {
-  $client: postgres.Sql<{}>;
-};
+type Return = PostgresJsDatabase<Record<string, never>> & { $client: Sql<{}> };
 
 const create = (url: string): Return => {
   const client = postgres(url);
