@@ -1,29 +1,11 @@
-import Fastify, {
-  type FastifyBaseLogger,
-  type FastifyInstance,
-  type FastifyReply,
-  type FastifyTypeProviderDefault,
-} from 'fastify';
-import {
-  type IncomingMessage,
-  type Server,
-  type ServerResponse,
-} from 'node:http';
+import Fastify, { type FastifyInstance, type FastifyReply } from 'fastify';
 
 import dbPlugin from './plugins/db';
 import envPlugin from './plugins/env';
 
-type Return = FastifyInstance<
-  Server<typeof IncomingMessage, typeof ServerResponse>,
-  IncomingMessage,
-  ServerResponse<IncomingMessage>,
-  FastifyBaseLogger,
-  FastifyTypeProviderDefault
->;
-
 const OPTIONS = { logger: true } as const;
 
-const build = async (): Promise<Return> => {
+const create = async (): Promise<FastifyInstance> => {
   const app = Fastify(OPTIONS);
   await app.register(envPlugin);
   await app.register(dbPlugin);
@@ -35,4 +17,4 @@ const build = async (): Promise<Return> => {
   return app;
 };
 
-export default build;
+export default create;

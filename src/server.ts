@@ -1,8 +1,8 @@
-import build from './app';
+import create from './app';
 
 const start = async (): Promise<void> => {
-  const app = await build();
-  const options = { port: app.config.PORT, host: '0.0.0.0' };
+  const app = await create();
+  const options = { host: '0.0.0.0', port: app.config.PORT };
   await app.listen(options);
 };
 
