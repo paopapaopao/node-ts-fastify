@@ -1,7 +1,6 @@
 import Fastify, { type FastifyInstance, type FastifyReply } from 'fastify';
 
-import dbPlugin from './plugins/db';
-import envPlugin from './plugins/env';
+import { dbPlugin, envPlugin } from './plugins';
 import { posts } from './schemas';
 
 type GetPostsReturn = {
