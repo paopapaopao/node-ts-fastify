@@ -25,11 +25,15 @@ pnpm install
 3. **Start the development server**
 
 ```bash
-pnpm run start
+pnpm run dev
 ```
 
 ## Script(s)
 
-| Command          | Description      |
-| ---------------- | ---------------- |
-| `pnpm run start` | Start dev server |
+| Command             | Description                  |
+| ------------------- | ---------------------------- |
+| `pnpm run start`    | Start production server      |
+| `pnpm run dev`      | Start development server     |
+| `pnpm run generate` | Generate migrations          |
+| `pnpm run migrate`  | Apply migrations to database |
+| `pnpm run studio`   | Open Drizzle studio          |

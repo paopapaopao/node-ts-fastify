@@ -1,6 +1,9 @@
-import app from './app';
+import create from './app';
 
-const PORT = 4000;
-const port = Number(process.env.PORT) || PORT;
+const start = async (): Promise<void> => {
+  const app = await create();
+  const options = { host: '0.0.0.0', port: app.config.PORT };
+  await app.listen(options);
+};
 
-app.listen({ port, host: '0.0.0.0' });
+start();

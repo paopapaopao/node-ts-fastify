@@ -1,9 +1,20 @@
-import Fastify, { FastifyReply } from 'fastify';
+import Fastify, { type FastifyInstance, type FastifyReply } from 'fastify';
 
-const app = Fastify({ logger: true });
+import dbPlugin from './plugins/db';
+import envPlugin from './plugins/env';
 
-app.get('/', (_, reply: FastifyReply): void => {
-  reply.send('node-ts-fastify');
-});
+const OPTIONS = { logger: true } as const;
 
-export default app;
+const create = async (): Promise<FastifyInstance> => {
+  const app = Fastify(OPTIONS);
+  await app.register(envPlugin);
+  await app.register(dbPlugin);
+
+  app.get('/', (_, reply: FastifyReply): void => {
+    reply.send('node-ts-fastify');
+  });
+
+  return app;
+};
+
+export default create;
