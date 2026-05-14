@@ -32,8 +32,9 @@ pnpm run dev
 
 | Command             | Description                  |
 | ------------------- | ---------------------------- |
-| `pnpm run start`    | Start production server      |
 | `pnpm run dev`      | Start development server     |
+| `pnpm run start`    | Start production server      |
 | `pnpm run generate` | Generate migrations          |
 | `pnpm run migrate`  | Apply migrations to database |
 | `pnpm run studio`   | Open Drizzle studio          |
+| `pnpm run seed`     | Seed database                |

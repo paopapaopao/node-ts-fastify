@@ -2,14 +2,16 @@
   "name": "node-ts-fastify",
   "version": "0.0.0",
   "scripts": {
-    "start": "tsx src/server.ts",
     "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
-    "studio": "drizzle-kit studio"
+    "studio": "drizzle-kit studio",
+    "seed": "tsx src/seed.ts"
   },
   "dependencies": {
     "@fastify/env": "^6.0.0",
+    "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
     "fastify-plugin": "^5.1.0",
     "fastify": "^5.8.5",
