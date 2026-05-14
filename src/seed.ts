@@ -1,5 +1,9 @@
+import dotenv from 'dotenv';
+
 import create from './db';
 import { postsTable } from './schemas';
+
+dotenv.config();
 
 const db = create(process.env.DATABASE_URL!);
 
