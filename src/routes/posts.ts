@@ -1,6 +1,6 @@
 import { type FastifyInstance } from 'fastify';
 
-import { posts } from '../schemas';
+import { postsTable } from '../schemas';
 
 type GetPostsReturn = {
   id: number;
@@ -8,12 +8,12 @@ type GetPostsReturn = {
   body: string;
 }[];
 
-const routes = (app: FastifyInstance) => {
+const postsRoutes = (app: FastifyInstance): void => {
   app.get('/posts', async (_, __): Promise<GetPostsReturn> => {
-    const response = await app.db.select().from(posts);
+    const response = await app.db.select().from(postsTable);
 
     return response;
   });
 };
 
-export default routes;
+export default postsRoutes;
