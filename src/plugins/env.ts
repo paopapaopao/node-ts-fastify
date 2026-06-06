@@ -14,10 +14,6 @@ const OPTIONS = {
   },
 } as const;
 
-const envPlugin = fastifyPlugin(
-  async (fastify: FastifyInstance): Promise<void> => {
-    await fastify.register(fastifyEnv, OPTIONS);
-  },
-);
-
-export default envPlugin;
+export const envPlugin = fastifyPlugin(async (fastify: FastifyInstance) => {
+  await fastify.register(fastifyEnv, OPTIONS);
+});
