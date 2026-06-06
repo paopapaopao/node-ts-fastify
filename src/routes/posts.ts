@@ -5,20 +5,20 @@ import { postsTable } from '../schemas';
 
 export const postsRoutes = (app: FastifyInstance) => {
   app.get('/posts', async (_, __) => {
-    const response = await app.db.select().from(postsTable);
+    const posts = await app.db.select().from(postsTable);
 
-    return response;
+    return posts;
   });
 
   app.get('/posts/:id', async (request: FastifyRequest, __) => {
     const { id } = request.params as { id: string };
 
-    const [response] = await app.db
+    const [post] = await app.db
       .select()
       .from(postsTable)
       .where(eq(postsTable.id, Number(id)))
       .limit(1);
 
-    return response;
+    return post;
   });
 };
