@@ -1,6 +1,6 @@
 import 'fastify';
 
-import create from '../db';
+import { createDb } from '../db';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -8,6 +8,6 @@ declare module 'fastify' {
       DATABASE_URL: string;
       PORT: number;
     };
-    db: ReturnType<typeof create>;
+    db: ReturnType<typeof createDb>;
   }
 }

@@ -1,2 +1,2 @@
-export { default as dbPlugin } from './db';
-export { default as envPlugin } from './env';
+export { dbPlugin } from './db';
+export { envPlugin } from './env';

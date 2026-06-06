@@ -1,19 +1,24 @@
-import { type FastifyInstance } from 'fastify';
+import { eq } from 'drizzle-orm';
+import { type FastifyInstance, type FastifyRequest } from 'fastify';
 
 import { postsTable } from '../schemas';
 
-type GetPostsReturn = {
-  id: number;
-  title: string;
-  body: string;
-}[];
+export const postsRoutes = (app: FastifyInstance) => {
+  app.get('/posts', async (_, __) => {
+    const posts = await app.db.select().from(postsTable);
 
-const postsRoutes = (app: FastifyInstance): void => {
-  app.get('/posts', async (_, __): Promise<GetPostsReturn> => {
-    const response = await app.db.select().from(postsTable);
+    return posts;
+  });
 
-    return response;
+  app.get('/posts/:id', async (request: FastifyRequest, __) => {
+    const { id } = request.params as { id: string };
+
+    const [post] = await app.db
+      .select()
+      .from(postsTable)
+      .where(eq(postsTable.id, Number(id)))
+      .limit(1);
+
+    return post;
   });
 };
-
-export default postsRoutes;

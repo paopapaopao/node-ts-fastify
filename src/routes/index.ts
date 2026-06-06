@@ -1,1 +1,1 @@
-export { default as postsRoutes } from './posts';
+export { postsRoutes } from './posts';
