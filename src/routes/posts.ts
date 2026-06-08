@@ -21,4 +21,21 @@ export const postsRoutes = (app: FastifyInstance) => {
 
     return post;
   });
+
+  app.post('/posts', async (request: FastifyRequest) => {
+    try {
+      const { title, body } = request.body as {
+        title: string;
+        body: string;
+      };
+
+      const [post] = await app.db.insert(postsTable).values({ title, body }).returning();
+
+      return post;
+    } catch (error) {
+      console.error('error', error);
+
+      throw error;
+    }
+  });
 };
