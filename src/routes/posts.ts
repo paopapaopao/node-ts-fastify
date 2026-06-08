@@ -65,4 +65,22 @@ export const postsRoutes = (app: FastifyInstance) => {
       throw error;
     }
   });
+
+  app.delete('/posts/:id', async (request: FastifyRequest, reply: FastifyReply) => {
+    const { id } = request.params as { id: string };
+
+    const [post] = await app.db
+      .delete(postsTable)
+      .where(eq(postsTable.id, Number(id)))
+      .returning();
+
+    if (!post) {
+      return reply.status(404).send({ message: 'Post not found' });
+    }
+
+    return {
+      message: 'Post deleted successfully',
+      post: post,
+    };
+  });
 };
