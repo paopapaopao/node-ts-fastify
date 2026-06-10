@@ -8,7 +8,7 @@ dotenv.config();
 const db = createDb(process.env.DATABASE_URL!);
 
 const seed = async () => {
-  const response = await fetch('https://dummyjson.com/posts?limit=32&select=id,title,body');
+  const response = await fetch('https://dummyjson.com/posts?limit=0&select=id,title,body');
 
   // TODO: Add type
   const data: any = await response.json();
