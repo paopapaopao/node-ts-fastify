@@ -4,25 +4,17 @@ import { type FastifyInstance, type FastifyReply, type FastifyRequest } from 'fa
 import { postsTable } from '../schemas';
 
 export const postsRoutes = (app: FastifyInstance) => {
-  app.get('/posts', async (_, __) => {
+  app.get('/posts', async (_, reply: FastifyReply) => {
     const posts = await app.db.select().from(postsTable);
 
-    return posts;
+    return reply.send({
+      success: true,
+      message: 'Post read',
+      data: posts,
+    });
   });
 
-  app.get('/posts/:id', async (request: FastifyRequest, __) => {
-    const { id } = request.params as { id: string };
-
-    const [post] = await app.db
-      .select()
-      .from(postsTable)
-      .where(eq(postsTable.id, Number(id)))
-      .limit(1);
-
-    return post;
-  });
-
-  app.post('/posts', async (request: FastifyRequest) => {
+  app.post('/posts', async (request: FastifyRequest, reply: FastifyReply) => {
     const { title, body } = request.body as {
       title: string;
       body: string;
@@ -31,12 +23,40 @@ export const postsRoutes = (app: FastifyInstance) => {
     try {
       const [post] = await app.db.insert(postsTable).values({ title, body }).returning();
 
-      return post;
+      return reply.send({
+        success: true,
+        message: 'Post created',
+        data: post,
+      });
     } catch (error) {
       console.error('error', error);
 
       throw error;
     }
+  });
+
+  app.get('/posts/:id', async (request: FastifyRequest, reply: FastifyReply) => {
+    const { id } = request.params as { id: string };
+
+    const [post] = await app.db
+      .select()
+      .from(postsTable)
+      .where(eq(postsTable.id, Number(id)))
+      .limit(1);
+
+    if (post === undefined) {
+      return reply.status(404).send({
+        success: false,
+        message: 'Post not found',
+        data: null,
+      });
+    }
+
+    return reply.send({
+      success: true,
+      message: 'Post read',
+      data: post,
+    });
   });
 
   app.put('/posts/:id', async (request: FastifyRequest, reply: FastifyReply) => {
@@ -47,23 +67,25 @@ export const postsRoutes = (app: FastifyInstance) => {
       body: string;
     };
 
-    try {
-      const [post] = await app.db
-        .update(postsTable)
-        .set({ title, body })
-        .where(eq(postsTable.id, Number(id)))
-        .returning();
+    const [post] = await app.db
+      .update(postsTable)
+      .set({ title, body })
+      .where(eq(postsTable.id, Number(id)))
+      .returning();
 
-      if (!post) {
-        return reply.status(404).send({ message: 'Post not found' });
-      }
-
-      return post;
-    } catch (error) {
-      console.error('error', error);
-
-      throw error;
+    if (post === undefined) {
+      return reply.status(404).send({
+        success: false,
+        message: 'Post not found',
+        data: null,
+      });
     }
+
+    return reply.send({
+      success: true,
+      message: 'Post updated',
+      data: post,
+    });
   });
 
   app.delete('/posts/:id', async (request: FastifyRequest, reply: FastifyReply) => {
@@ -74,13 +96,18 @@ export const postsRoutes = (app: FastifyInstance) => {
       .where(eq(postsTable.id, Number(id)))
       .returning();
 
-    if (!post) {
-      return reply.status(404).send({ message: 'Post not found' });
+    if (post === undefined) {
+      return reply.status(404).send({
+        success: false,
+        message: 'Post not found',
+        data: null,
+      });
     }
 
-    return {
-      message: 'Post deleted successfully',
-      post: post,
-    };
+    return reply.send({
+      success: true,
+      message: 'Post deleted',
+      data: post,
+    });
   });
 };
