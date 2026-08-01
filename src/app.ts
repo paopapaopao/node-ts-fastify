@@ -1,6 +1,6 @@
 import Fastify, { type FastifyReply } from 'fastify';
 
-import { dbPlugin, envPlugin } from './plugins';
+import { corsPlugin, dbPlugin, envPlugin } from './plugins';
 import { postsRoutes } from './routes';
 
 const OPTIONS = { logger: true } as const;
@@ -10,6 +10,7 @@ export const createApp = async () => {
 
   await app.register(envPlugin);
   await app.register(dbPlugin);
+  await app.register(corsPlugin);
 
   await app.register(postsRoutes);
 
