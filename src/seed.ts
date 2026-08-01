@@ -40,7 +40,9 @@ const seedRecipesTable = async () => {
 };
 
 const seed = async () => {
-  const response = await fetch('https://dummyjson.com/posts?limit=0&select=id,title,body');
+  const response = await fetch(
+    'https://dummyjson.com/posts?limit=0&select=id,title,body',
+  );
 
   // TODO: Add type
   const data: any = await response.json();
@@ -53,6 +55,8 @@ const seed = async () => {
       body: post.body,
     })),
   );
+
+  await seedRecipesTable();
 
   console.log('Seeding done');
 };
