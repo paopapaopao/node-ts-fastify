@@ -10,6 +10,7 @@
     "seed": "tsx src/seed.ts"
   },
   "dependencies": {
+    "@fastify/cors": "^11.3.0",
     "@fastify/env": "^6.0.0",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
