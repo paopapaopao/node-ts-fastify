@@ -1,0 +1,20 @@
+CREATE TABLE "recipes" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"image" text NOT NULL,
+	"name" text NOT NULL,
+	"ingredients" text[] NOT NULL,
+	"instructions" text[] NOT NULL,
+	"prep_time" numeric,
+	"cook_time" numeric,
+	"difficulty" text,
+	"servings" numeric,
+	"calories" numeric,
+	"cuisine" text,
+	"tags" text[],
+	"meal_type" text[],
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"user_id" numeric,
+	"review_count" numeric,
+	"rating" numeric
+);
